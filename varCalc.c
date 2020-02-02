@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 
 double calc(int* list, double n){
@@ -43,12 +44,25 @@ int main(){
 	char* str = malloc(25 * sizeof(char));
 	int n;
 
-	printf("Enter the list like [a,b,c] followed by a space and the number of values in the list\n");
+	// allow the program to keep processing new inputs without restarting
+	while(1){
+		printf("Enter the list like [a,b,c] followed by a space and the number of values in the list or type q to quit\n");
 
-	fscanf(stdin, "%s %d", str, &n);
+		fscanf(stdin, "%s", str);
 
-	int* arr = strToArr(str);
-	double var = calc(arr, n);
+		// check if the user wants to quit the program
+		const char * quit = "q";
+		if(strcmp(str, quit) == 0)
+			return 0;
 
-	printf("Variance of %s is %f\n", str, var);
+		// since they don't want to quit, keep going
+		fscanf(stdin, "%d", &n);
+
+		int* arr = strToArr(str);
+		double var = calc(arr, n);
+
+		printf("Variance of %s is %f\n\n", str, var);
+	}
+	// it shouldn't get here
+	return 1;
 }
